@@ -1,3 +1,9 @@
+body {
+  font-size: 16px;
+  background-color: #ff6500;
+  color: #000000;
+}
+
 .contain {
   display: flex;
   flex-direction: column;
@@ -8,9 +14,11 @@
 
 #userInput {
   padding: 3%;
-  border: 6px solid rgb(223, 56, 56);
+  border-radius: 5%;
+  background-color: #ffffff;
 }
 
 .weatherGipsy {
-  border: 6px solid yellowgreen;
+  width: 250px;
+  height: 150px;
 }
