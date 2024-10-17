@@ -1,7 +1,7 @@
 const userInput = document.querySelector("#userInput");
 const img = document.querySelector(".weatherGipsy");
 
-img.style.display = "none";
+weatherGipsy("Funny Weather News");
 
 userInput.addEventListener("submit", async function (event) {
   event.preventDefault();
@@ -13,30 +13,32 @@ userInput.addEventListener("submit", async function (event) {
     const loggedData = await hitAPI(location);
     const liveResult = loggedData;
     const condition = liveResult.currentConditions.conditions;
+    img.style.display = "none";
+    img.src = "";
     weatherGipsy(condition);
     handleDisplay(liveResult);
   } catch (error) {
     console.log("Error(from eventlistner function): ", error);
   }
-
-  //To Handle the appropirate Gipsy for the current weather condition
-  async function weatherGipsy(condition) {
-    img.style.display = "block";
-    try {
-      const response = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=3Nnbnu5G5xbCIE1Cnfs3H3BI7wpjnlka&s=${condition} weather sky`);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-
-      const url = data.data.images.original.url;
-      img.src = url;
-    } catch (error) {
-      errorMsg.textContent = `Fetch error: ${error.message}`;
-    }
-  }
 });
+
+//To Handle the appropirate Gipsy for the current weather condition
+async function weatherGipsy(condition) {
+  img.style.display = "block";
+  try {
+    const response = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=3Nnbnu5G5xbCIE1Cnfs3H3BI7wpjnlka&s=${condition} weather sky`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+
+    const url = data.data.images.original.url;
+    img.src = url;
+  } catch (error) {
+    console.log(`Fetch error: ${error.message}`);
+  }
+}
 
 // To handle Weather APIHIT
 async function hitAPI(location) {
